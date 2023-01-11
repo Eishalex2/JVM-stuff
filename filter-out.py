@@ -5,7 +5,7 @@ df = pd.read_excel('MLS-Austin-listings.xlsx')
 header = df.columns.tolist()
 
 df_list = df.values.tolist()
-keywords = ["cash only", "hard money only", "55+", "senior community", "no financing", "no loan", "commercial"]
+keywords = ["cash only", "hard money only", "55+", "senior community", "no financing", "no loan", "commercial", "construction loan"]
 filtered = []
 bad = []
 
