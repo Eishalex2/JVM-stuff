@@ -1,5 +1,4 @@
 import pandas as pd
-import re
 
 df = pd.read_excel('MLS Austin listings_DE-DUPED.xlsx')
 
