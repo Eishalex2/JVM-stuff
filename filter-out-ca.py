@@ -1,6 +1,6 @@
 import pandas as pd
 
-df = pd.read_excel('../MLS CA 30+ listings_DE-DUPED.xlsx')
+df = pd.read_excel('../CA MLS A-Y.xlsx')
 
 header = df.columns.tolist()
 header[0] = "List Agent First Name"
@@ -10,14 +10,17 @@ keywords = ["cash only", "cash offer", "cash buyer", "cash sale", "cash transact
 keep = []
 bad = []
 
+
+#Number is for Confidential remarks. Assuming column C
 for list in df_list:
-  if type(list[27]) == float:
+  if type(list[2]) == float:
     keep.append(list)
-  elif any(keyword in list[27].lower() for keyword in keywords):
+  elif any(keyword in list[2].lower() for keyword in keywords):
     bad.append(list)
   else:
     keep.append(list)
 
+#Assuming names in column A
 names = []
 for list in keep:
   split_name = list[0].split()
