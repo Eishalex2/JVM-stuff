@@ -20,7 +20,7 @@ for list in df_list:
   else:
     keep.append(list)
 
-#Assuming names in column A
+#Assuming names in column Agit 
 names = []
 for list in keep:
   split_name = list[0].split()
@@ -37,8 +37,8 @@ for nameset in names:
 first_name = []
 last_name = []
 for name in names:
-  first_name.append(name[0])
-  last_name.append(name[1])
+  first_name.append(name[0].title())
+  last_name.append(name[1].title())
 
 keep_df = pd.DataFrame(keep, columns=header)
 keep_df["List Agent First Name"] = first_name
