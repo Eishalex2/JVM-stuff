@@ -1,6 +1,6 @@
 import pandas as pd
 
-df = pd.read_excel('../Listing_Agent_Stale.xlsx')
+df = pd.read_excel('../CA Listings 02.06.xlsx')
 
 header = df.columns.tolist()
 header[0] = "List Agent First Name"
@@ -15,13 +15,14 @@ bad = []
 #Number is for Confidential remarks. Assuming column E
 #Filtering out the above keywords
 for list in df_list:
+  #Make the addresses title case. Assuming column C
+  list[2] = list[2].lower().title()
   if type(list[4]) == float:
     keep.append(list)
   elif any(keyword in list[4].lower() for keyword in keywords):
     bad.append(list)
   else:
     keep.append(list)
-  list[2].lower().title()
 
 #Assuming names in column A
 #Splitting listing agent names 
@@ -44,9 +45,10 @@ for nameset in names:
 first_name = []
 last_name = []
 for name in names:
-  first_name.append(name[0].title())
+  first_name.append(name[0].lower().title())
   if len(name) > 1:
-    last_name.append(name[1].title())
+    last_name.append(name[1].lower().title())
+  #handle the edge case where there's no 2nd name
   else:
     last_name.append('')
 

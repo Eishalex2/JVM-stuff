@@ -1,43 +1,49 @@
 import pandas as pd
 
-df = pd.read_excel('../Austin Listing Agent Stale .xlsx')
+df = pd.read_excel('../Austin listings 2.6.xlsx')
 
 header = df.columns.tolist()
 header[1] = "List Agent First Name"
 
 df_list = df.values.tolist()
-keywords = ["cash only", "cash offers", "hard money", "55+", "senior community", "no financing", "no loan", "commercial", "construction loan"]
+keywords = ["time share", "cash only", "cash offers", "hard money", "55+", "senior community", "no financing", "no loan", "commercial", "construction loan"]
 filtered = []
 bad = []
 
-#number is the Private Remarks Column. Assuming in column D.
+#number is the Private Remarks Column. Assuming in column E.
 for list in df_list:
-  if type(list[3]) == float:
+  #Make the addresses title case. Assuming Column C
+  list[2] = list[2].lower().title()
+  if type(list[4]) == float:
     filtered.append(list)
-  elif any(keyword in list[3].lower() for keyword in keywords):
+  elif any(keyword in list[4].lower() for keyword in keywords):
     bad.append(list)
   else:
     filtered.append(list)
 
-#Assuming full name is in column B
+#Assuming full name is in column A
 names = []
 for list in filtered:
-  split_name = list[1].split()
+  split_name = list[0].split()
   names.append(split_name)
 
 for nameset in names:
-  middle_last = nameset[1]
-  if len(middle_last) == 1 or middle_last[1] == ".":
-    nameset.pop(1)
-  if len(nameset) > 2:
-    nameset[1] = " ".join(nameset[1:])
-    del nameset[2:]
+  if len(nameset) > 1:
+    middle_last = nameset[1]
+    if len(middle_last) == 1 or middle_last[1] == ".":
+      nameset.pop(1)
+    if len(nameset) > 2:
+      nameset[1] = " ".join(nameset[1:])
+      del nameset[2:]
 
 first_name = []
 last_name = []
 for name in names:
-  first_name.append(name[0])
-  last_name.append(name[1])
+  first_name.append(name[0].lower().title())
+  if len(name) > 1:
+    last_name.append(name[1].lower().title())
+  else:
+    last_name.append('')
 
 filtered_df = pd.DataFrame(filtered, columns=header)
 filtered_df["List Agent First Name"] = first_name
