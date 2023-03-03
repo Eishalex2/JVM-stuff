@@ -1,13 +1,13 @@
 import pandas as pd
 
-df = pd.read_excel('../Austin listings 2.6.xlsx')
+df = pd.read_excel('../Listing Agent Stale.xlsx')
 
 header = df.columns.tolist()
-header[1] = "List Agent First Name"
+header[0] = "List Agent First Name"
 
 df_list = df.values.tolist()
 keywords = ["time share", "cash only", "cash offers", "hard money", "55+", "senior community", "no financing", "no loan", "commercial", "construction loan"]
-filtered = []
+keep = []
 bad = []
 
 #number is the Private Remarks Column. Assuming in column E.
@@ -15,15 +15,15 @@ for list in df_list:
   #Make the addresses title case. Assuming Column C
   list[2] = list[2].lower().title()
   if type(list[4]) == float:
-    filtered.append(list)
+    keep.append(list)
   elif any(keyword in list[4].lower() for keyword in keywords):
     bad.append(list)
   else:
-    filtered.append(list)
+    keep.append(list)
 
 #Assuming full name is in column A
 names = []
-for list in filtered:
+for list in keep:
   split_name = list[0].split()
   names.append(split_name)
 
@@ -45,9 +45,9 @@ for name in names:
   else:
     last_name.append('')
 
-filtered_df = pd.DataFrame(filtered, columns=header)
+filtered_df = pd.DataFrame(keep, columns=header)
 filtered_df["List Agent First Name"] = first_name
-filtered_df.insert(2, "List Agent Last Name", last_name)
+filtered_df.insert(1, "List Agent Last Name", last_name)
 
 bad_df = pd.DataFrame(bad, columns=header)
 
