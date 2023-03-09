@@ -1,6 +1,6 @@
 import pandas as pd
 
-df = pd.read_excel('../CA Listings 2.20.xlsx')
+df = pd.read_excel('../CA Listings 03.06.xlsx')
 
 header = df.columns.tolist()
 header[0] = "List Agent First Name"
