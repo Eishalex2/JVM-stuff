@@ -1,13 +1,13 @@
 import pandas as pd
 
-df = pd.read_excel('../CA Listings 03.06.xlsx')
+df = pd.read_excel('../a-z, no s.xlsx')
 
 header = df.columns.tolist()
 header[0] = "List Agent First Name"
 
 df_list = df.values.tolist()
 #list of keywords to filter out into the 'bad' worksheet
-keywords = ["time share", "cash only", "cash offer", "cash buyer", "cash sale", "cash transaction only", "hard money", "55+", "senior community", "no financing", "no loan", "commercial", "construction loan"]
+keywords = ["retirement community", "time share", "cash only", "cash offer", "cash buyer", "cash sale", "cash transaction only", "hard money", "55+", "senior community", "no financing", "no loan", "commercial", "construction loan"]
 keep = []
 bad = []
 
