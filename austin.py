@@ -1,12 +1,12 @@
 import pandas as pd
 
-df = pd.read_excel('../Austin.xlsx')
+df = pd.read_excel('../Austin (1).xlsx')
 
 header = df.columns.tolist()
 header[0] = "List Agent First Name"
 
 df_list = df.values.tolist()
-keywords = ["retirement community", "time share", "cash only", "cash offers", "hard money", "55+", "senior community", "no financing", "no loan", "commercial", "construction loan"]
+keywords = ["retirement community", "time share", "cash only", "cash offers", "hard money", "55+", "senior community", "no financing", "no loan", "construction loan"]
 keep = []
 bad = []
 
