@@ -1,6 +1,6 @@
 import pandas as pd
 
-df = pd.read_excel('../Idaho listings 5.1, need de-duping.xlsx')
+df = pd.read_excel('../Idaho 1-100.xlsx')
 
 header = df.columns.tolist()
 header[0] = "List Agent First Name"
@@ -10,16 +10,41 @@ keywords = ["retirement community", "time share", "cash only", "hard money", "55
 keep = []
 bad = []
 
+def capitalize_address(address):
+    words = address.split(' ')
+    capitalized_words = []
+
+    # Loop through each word in the address
+    for i, word in enumerate(words):
+        # Capitalize the word if it meets the specified conditions
+        if i == 0 or (len(word) > 2 and word[:2].upper() == word[:2]):
+            capitalized_words.append(word.capitalize())
+        elif i == 1 and len(word) == 2 and word.isalpha() and word.islower():
+            capitalized_words.append(word.upper())
+        else:
+            capitalized_words.append(word.capitalize())
+
+    # Join the words back into a single string
+    capitalized_address = ' '.join(capitalized_words)
+    return capitalized_address
+
 #number is the Private Remarks Column. Assuming in column E.
 for list in df_list:
-  #Make the addresses title case. Assuming Column C
-  list[2] = list[2].lower().title()
+  if type(list[2]) == int:
+    print(list[2])
   if type(list[4]) == float:
     keep.append(list)
   elif any(keyword in list[4].lower() for keyword in keywords):
     bad.append(list)
   else:
     keep.append(list)
+  #Make the addresses title case. Assuming Column C
+
+
+for list in keep:
+  lower_address = list[2].lower()
+  list[2] = capitalize_address(lower_address)
+
 
 #Assuming full name is in column A
 names = []
