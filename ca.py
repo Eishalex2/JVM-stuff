@@ -7,7 +7,7 @@ header[0] = "List Agent First Name"
 
 df_list = df.values.tolist()
 #list of keywords to filter out into the 'bad' worksheet
-keywords = ["retirement community", "time share", "cash only", "cash offers only", "cash buyer", "cash sale", "cash transaction only", "hard money", "55+", "senior community", "no financing", "no loan", "construction loan"]
+keywords = ["hard cash", "retirement community", "time share", "cash only", "cash offers only", "cash buyer", "cash sale", "cash transaction only", "hard money", "55+", "senior community", "no financing", "no loan", "construction loan"]
 keep = []
 bad = []
 

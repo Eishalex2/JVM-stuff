@@ -1,6 +1,6 @@
 import pandas as pd
 
-df = pd.read_excel('../Combined Actives.xlsx')
+df = pd.read_excel('../Citi Home Run CA.xlsx')
 
 header = df.columns.tolist()
 #Assuming listing agent name is column A
@@ -8,22 +8,42 @@ header[0] = "List Agent First Name"
 
 df_list = df.values.tolist()
 #list of keywords to filter out into the 'bad' worksheet
-keywords = ["own your own", "retirement community", "time share", "cash only", "cash offers only", "cash sale", "cash transaction only", "hard money", "55+", "senior community", "no financing", "no loan", "construction loan"]
+keywords = ["hard cash","oyo", "own your own", "retirement community", "time share", "cash only", "cash offers only", "cash sale", "cash transaction only", "hard money", "55+", "senior community", "no financing", "no loan", "construction loan"]
 keep = []
 bad = []
 
+def capitalize_address(address):
+    words = address.split(' ')
+    capitalized_words = []
 
-#Number is for Confidential remarks. Assuming column E
+    # Loop through each word in the address
+    for i, word in enumerate(words):
+        # Capitalize the word if it meets the specified conditions
+        if i == 0 or (len(word) > 2 and word[:2].upper() == word[:2]):
+            capitalized_words.append(word.capitalize())
+        elif i == 1 and len(word) == 2 and word.isalpha() and word.islower():
+            capitalized_words.append(word.upper())
+        else:
+            capitalized_words.append(word.capitalize())
+
+    # Join the words back into a single string
+    capitalized_address = ' '.join(capitalized_words)
+    return capitalized_address
+
+#Number is for Confidential remarks. Assuming column I
 #Filtering out the above keywords
 for list in df_list:
-  #Make the addresses title case. Assuming column C
-  list[3] = list[3].lower().title()
   if type(list[8]) == float:
     keep.append(list)
   elif any(keyword in list[8].lower() for keyword in keywords):
     bad.append(list)
   else:
     keep.append(list)
+
+#capitalize addresses, assuming column D
+for list in keep:
+   lower_address = list[3].lower()
+   list[3] = capitalize_address(lower_address)
 
 #Assuming names in column A
 #Splitting listing agent names 
