@@ -1,12 +1,12 @@
 import pandas as pd
 
-df = pd.read_excel('../Idaho 7.10.xlsx')
+df = pd.read_excel('../Austin 7.10.xlsx')
 
 header = df.columns.tolist()
 header[0] = "List Agent First Name"
 
 df_list = df.values.tolist()
-keywords = ["retirement community", "time share", "cash only", "hard money", "55+", "senior community", "no financing", "no loan", "construction loan"]
+keywords = ["fractional ownership", "retirement community", "time share", "cash only", "hard money", "55+", "senior community", "no financing", "no loan", "construction loan"]
 keep = []
 bad = []
 
@@ -28,10 +28,9 @@ def capitalize_address(address):
     capitalized_address = ' '.join(capitalized_words)
     return capitalized_address
 
+
 for list in df_list:
-  if type(list[2]) == int:
-    print(list[2])
-  if list[4] == "Cash":
+  if list[4] == "Cash Sale":
     bad.append(list)
   else: 
     keep.append(list)
@@ -40,17 +39,15 @@ for list in df_list:
 for list in keep:
   if type(list[5]) == float:
     continue
-  elif any(keyword in list[4].lower() for keyword in keywords):
+  elif any(keyword in list[5].lower() for keyword in keywords):
     bad.append(list)
     keep.remove(list)
-  #Make the addresses title case. Assuming Column C
 
 for list in keep:
-  if type(list[2]) == float:
-     print(list)
-  else:
+    #Make the addresses title case. Assuming Column C
     lower_address = list[2].lower()
     list[2] = capitalize_address(lower_address)
+
 
 #Assuming full name is in column A
 names = []
@@ -82,6 +79,6 @@ filtered_df.insert(1, "List Agent Last Name", last_name)
 
 bad_df = pd.DataFrame(bad, columns=header)
 
-with pd.ExcelWriter("Idaho.xlsx") as writer:
-  filtered_df.to_excel(writer, sheet_name="keep_idaho")
-  bad_df.to_excel(writer, sheet_name="filt-out_idaho")
+with pd.ExcelWriter("Houston.xlsx") as writer:
+  filtered_df.to_excel(writer, sheet_name="keep_houston")
+  bad_df.to_excel(writer, sheet_name="filt-out_houston")

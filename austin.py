@@ -1,12 +1,12 @@
 import pandas as pd
 
-df = pd.read_excel('../MLS-TX-Listings.xlsx')
+df = pd.read_excel('../Austin 7.10.xlsx')
 
 header = df.columns.tolist()
 header[0] = "List Agent First Name"
 
 df_list = df.values.tolist()
-keywords = ["retirement community", "time share", "cash only", "hard money", "55+", "senior community", "no financing", "no loan", "construction loan"]
+keywords = ["fractional ownership", "retirement community", "time share", "cash only", "hard money", "55+", "senior community", "no financing", "no loan", "construction loan"]
 keep = []
 bad = []
 
@@ -28,14 +28,20 @@ def capitalize_address(address):
     capitalized_address = ' '.join(capitalized_words)
     return capitalized_address
 
-#number is the Private Remarks Column. Assuming in column E.
+
 for list in df_list:
-  if type(list[4]) == float:
-    keep.append(list)
-  elif any(keyword in list[4].lower() for keyword in keywords):
+  if list[4] == "Cash":
     bad.append(list)
-  else:
+  else: 
     keep.append(list)
+
+#number is the Private Remarks Column. Assuming in column E.
+for list in keep:
+  if type(list[5]) == float:
+    continue
+  elif any(keyword in list[5].lower() for keyword in keywords):
+    bad.append(list)
+    keep.remove(list)
 
 for list in keep:
     #Make the addresses title case. Assuming Column C

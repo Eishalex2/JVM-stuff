@@ -1,6 +1,6 @@
 import pandas as pd
 
-df = pd.read_excel('../Citi Home Run CA.xlsx')
+df = pd.read_excel('../Citi_Home_Run 7.18.xlsx')
 
 header = df.columns.tolist()
 #Assuming listing agent name is column A
@@ -30,15 +30,20 @@ def capitalize_address(address):
     capitalized_address = ' '.join(capitalized_words)
     return capitalized_address
 
-#Number is for Confidential remarks. Assuming column I
-#Filtering out the above keywords
+# assuming column H for Terms
 for list in df_list:
+  if list[7] == "Cash":
+     bad.append(list)
+  else:
+     keep.append(list)
+
+# Assuming column I for confidential remarks
+for list in keep:
   if type(list[8]) == float:
-    keep.append(list)
+    continue
   elif any(keyword in list[8].lower() for keyword in keywords):
     bad.append(list)
-  else:
-    keep.append(list)
+    keep.remove(list)
 
 #capitalize addresses, assuming column D
 for list in keep:
@@ -79,6 +84,6 @@ keep_df.insert(1, "List Agent Last Name", last_name)
 
 bad_df = pd.DataFrame(bad, columns=header)
 
-with pd.ExcelWriter("CA Actives.xlsx") as writer:
+with pd.ExcelWriter("Citi.xlsx") as writer:
   keep_df.to_excel(writer, sheet_name="keep_ca")
   bad_df.to_excel(writer, sheet_name="filt-out_ca")
