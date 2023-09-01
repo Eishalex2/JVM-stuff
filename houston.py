@@ -1,6 +1,6 @@
 import pandas as pd
 
-df = pd.read_excel('../Austin 7.10.xlsx')
+df = pd.read_excel('../Houston 8.22.xlsx')
 
 header = df.columns.tolist()
 header[0] = "List Agent First Name"
@@ -35,7 +35,7 @@ for list in df_list:
   else: 
     keep.append(list)
 
-#number is the Private Remarks Column. Assuming in column E.
+#number is the Private Remarks Column. Assuming in column F.
 for list in keep:
   if type(list[5]) == float:
     continue
@@ -79,6 +79,6 @@ filtered_df.insert(1, "List Agent Last Name", last_name)
 
 bad_df = pd.DataFrame(bad, columns=header)
 
-with pd.ExcelWriter("Houston.xlsx") as writer:
+with pd.ExcelWriter("../Houston 8.22 processed.xlsx") as writer:
   filtered_df.to_excel(writer, sheet_name="keep_houston")
   bad_df.to_excel(writer, sheet_name="filt-out_houston")

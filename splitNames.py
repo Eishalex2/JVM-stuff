@@ -1,6 +1,6 @@
 import pandas as pd
 
-df = pd.read_excel('../lawyers (1).xlsx')
+df = pd.read_excel('../Pool contractors.xlsx')
 
 header = df.columns.tolist()
 header[0] = "First Name"
@@ -34,4 +34,4 @@ lawyers_df = pd.DataFrame(df_list, columns = header)
 lawyers_df["First Name"] = first_name
 lawyers_df.insert(1, "Last Name", last_name)
 
-lawyers_df.to_excel("../BK Lawyers.xlsx")
+lawyers_df.to_excel("../Pool contractors split names.xlsx")

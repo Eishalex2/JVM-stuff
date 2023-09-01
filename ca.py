@@ -1,6 +1,6 @@
 import pandas as pd
 
-df = pd.read_excel('../CA List .xlsx')
+df = pd.read_excel('../CA List 8.21.xlsx')
 
 header = df.columns.tolist()
 header[0] = "List Agent First Name"
@@ -85,6 +85,6 @@ keep_df.insert(1, "List Agent Last Name", last_name)
 
 bad_df = pd.DataFrame(bad, columns=header)
 
-with pd.ExcelWriter("CA.xlsx") as writer:
+with pd.ExcelWriter("../CA 8.21 processed.xlsx") as writer:
   keep_df.to_excel(writer, sheet_name="keep_ca")
   bad_df.to_excel(writer, sheet_name="filt-out_ca")

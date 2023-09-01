@@ -1,6 +1,6 @@
 import pandas as pd
 
-df = pd.read_excel('../Idaho 7.10.xlsx')
+df = pd.read_excel('../Idaho 8.22.xlsx')
 
 header = df.columns.tolist()
 header[0] = "List Agent First Name"
@@ -28,6 +28,8 @@ def capitalize_address(address):
     capitalized_address = ' '.join(capitalized_words)
     return capitalized_address
 
+#Assuming Column E for the Terms. Print any addresses with only street
+#numbers to the command line
 for list in df_list:
   if type(list[2]) == int:
     print(list[2])
@@ -36,16 +38,17 @@ for list in df_list:
   else: 
     keep.append(list)
 
-#number is the Private Remarks Column. Assuming in column E.
+#number is the Private Remarks Column. Assuming in column F.
 for list in keep:
   if type(list[5]) == float:
     continue
-  elif any(keyword in list[4].lower() for keyword in keywords):
+  elif any(keyword in list[5].lower() for keyword in keywords):
     bad.append(list)
     keep.remove(list)
   #Make the addresses title case. Assuming Column C
 
 for list in keep:
+  #Print any blank address lines to the command line
   if type(list[2]) == float:
      print(list)
   else:
@@ -82,6 +85,6 @@ filtered_df.insert(1, "List Agent Last Name", last_name)
 
 bad_df = pd.DataFrame(bad, columns=header)
 
-with pd.ExcelWriter("Idaho.xlsx") as writer:
+with pd.ExcelWriter("../Idaho 8.22 processed.xlsx") as writer:
   filtered_df.to_excel(writer, sheet_name="keep_idaho")
   bad_df.to_excel(writer, sheet_name="filt-out_idaho")
