@@ -1,6 +1,6 @@
 import pandas as pd
 
-df = pd.read_excel('../Austin List (1).xlsx')
+df = pd.read_excel('../Dallas List (1).xlsx')
 
 header = df.columns.tolist()
 header[0] = "List Agent First Name"
@@ -30,16 +30,16 @@ def capitalize_address(address):
 
 
 for list in df_list:
-  if list[4] == "Cash":
+  if list[5] == "Cash":
     bad.append(list)
   else: 
     keep.append(list)
 
 #number is the Private Remarks Column. Assuming in column E.
 for list in keep:
-  if type(list[5]) == float:
+  if type(list[7]) == float:
     continue
-  elif any(keyword in list[5].lower() for keyword in keywords):
+  elif any(keyword in list[7].lower() for keyword in keywords):
     bad.append(list)
     keep.remove(list)
 
@@ -79,6 +79,6 @@ filtered_df.insert(1, "List Agent Last Name", last_name)
 
 bad_df = pd.DataFrame(bad, columns=header)
 
-with pd.ExcelWriter("../Austin 10.02 processed.xlsx") as writer:
-  filtered_df.to_excel(writer, sheet_name="keep_austin")
-  bad_df.to_excel(writer, sheet_name="filt-out_austin")
+with pd.ExcelWriter("../Dallas 10.02 processed.xlsx") as writer:
+  filtered_df.to_excel(writer, sheet_name="keep_dallas")
+  bad_df.to_excel(writer, sheet_name="filt-out_dallas")

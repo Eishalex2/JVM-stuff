@@ -1,6 +1,6 @@
 import pandas as pd
 
-df = pd.read_excel('../Pool contractors split names.xlsx')
+df = pd.read_excel('../ADU Contractors.xlsx')
 
 header = df.columns.tolist()
 df_list = df.values.tolist()
@@ -25,9 +25,9 @@ def capitalize_address(address):
 
 #Capitalize addresses. Indexing starts at 0
 for list in df_list:
-  lower_address = list[3].lower()
-  list[3] = capitalize_address(lower_address)
+  lower_address = list[4].lower()
+  list[4] = capitalize_address(lower_address)
 
 general_df = pd.DataFrame(df_list, columns=header)
 
-general_df.to_excel("../Pool contractors formatted addresses.xlsx")
+general_df.to_excel("../ADU Contractors formatted addresses.xlsx")
