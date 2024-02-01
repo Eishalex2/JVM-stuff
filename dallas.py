@@ -6,7 +6,9 @@ header = df.columns.tolist()
 header[0] = "List Agent First Name"
 
 df_list = df.values.tolist()
-keywords = ["fractional ownership", "retirement community", "time share", "cash only", "hard money", "55+", "senior community", "no financing", "no loan", "construction loan"]
+keywords = ["hard cash", "ccrc", "own your own", "retirement community", "time share", "timeshare", "cash only", "cash offers only", "cash buyer", 
+            "cash sale", "cash transaction only", "hard money", "hard money only", "55+", "senior community", "no financing", "no loan", "construction loan", 
+            "private money", "leased-land", "leased land", "land lease"]
 keep = []
 bad = []
 

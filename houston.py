@@ -1,12 +1,14 @@
 import pandas as pd
 
-df = pd.read_excel('../Houston list 10.02.xlsx')
+df = pd.read_excel('../Houston 1.22.xlsx')
 
 header = df.columns.tolist()
 header[0] = "List Agent First Name"
 
 df_list = df.values.tolist()
-keywords = ["fractional ownership", "retirement community", "time share", "cash only", "hard money", "55+", "senior community", "no financing", "no loan", "construction loan"]
+keywords = ["hard cash", "ccrc", "own your own", "retirement community", "time share", "timeshare", "cash only", "cash offers only", "cash buyer", 
+            "cash sale", "cash transaction only", "hard money", "hard money only", "55+", "senior community", "no financing", "no loan", "construction loan", 
+            "private money", "leased-land", "leased land", "land lease"]
 keep = []
 bad = []
 
@@ -79,6 +81,6 @@ filtered_df.insert(1, "List Agent Last Name", last_name)
 
 bad_df = pd.DataFrame(bad, columns=header)
 
-with pd.ExcelWriter("../Houston 9.18 processed.xlsx") as writer:
+with pd.ExcelWriter("../Houston processed 1.22.xlsx") as writer:
   filtered_df.to_excel(writer, sheet_name="keep_houston")
   bad_df.to_excel(writer, sheet_name="filt-out_houston")

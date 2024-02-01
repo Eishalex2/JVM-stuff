@@ -1,13 +1,15 @@
 import pandas as pd
 
-df = pd.read_excel('../CA List.xlsx')
+df = pd.read_excel('../CA condos.xlsx')
 
 header = df.columns.tolist()
 header[0] = "List Agent First Name"
 
 df_list = df.values.tolist()
 #list of keywords to filter out into the 'bad' worksheet
-keywords = ["hard cash", "retirement community", "time share", "cash only", "cash offers only", "cash buyer", "cash sale", "cash transaction only", "hard money", "55+", "senior community", "no financing", "no loan", "construction loan"]
+keywords = ["hard cash", "ccrc", "own your own", "retirement community", "time share", "timeshare", "cash only", "cash offers only", "cash buyer", 
+            "cash sale", "cash transaction only", "hard money", "hard money only", "55+", "senior community", "no financing", "no loan", "construction loan", 
+            "private money", "leased-land", "leased land", "land lease"]
 keep = []
 bad = []
 
@@ -31,7 +33,7 @@ def capitalize_address(address):
 
 
 for list in df_list:
-  if list[4] == "Cash":
+  if list[6] == "Cash":
     bad.append(list)
   else: 
     keep.append(list)
@@ -40,16 +42,16 @@ for list in df_list:
 #Filtering out the above keywords
 for list in keep:
   #handle blanks and filter out bad keywords
-  if type(list[5]) == float:
+  if type(list[8]) == float:
     continue
-  elif any(keyword in list[5].lower() for keyword in keywords):
+  elif any(keyword in list[8].lower() for keyword in keywords):
     bad.append(list)
     keep.remove(list)
 
 #Capitalize addresses. Assuming column C
 for list in keep:
-  lower_address = list[2].lower()
-  list[2] = capitalize_address(lower_address)
+  lower_address = list[3].lower()
+  list[3] = capitalize_address(lower_address)
 
 #Assuming names in column A
 #Splitting listing agent names 
@@ -85,6 +87,6 @@ keep_df.insert(1, "List Agent Last Name", last_name)
 
 bad_df = pd.DataFrame(bad, columns=header)
 
-with pd.ExcelWriter("../CA 10.2 processed.xlsx") as writer:
+with pd.ExcelWriter("../CA condos processed.xlsx") as writer:
   keep_df.to_excel(writer, sheet_name="keep_ca")
   bad_df.to_excel(writer, sheet_name="filt-out_ca")

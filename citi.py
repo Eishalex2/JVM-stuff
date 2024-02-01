@@ -1,6 +1,6 @@
 import pandas as pd
 
-df = pd.read_excel('../Citi_Home_Run 9.11.xlsx')
+df = pd.read_excel('../Citi_Home_Run 1.xlsx')
 
 header = df.columns.tolist()
 #Assuming listing agent name is column A
@@ -8,7 +8,9 @@ header[0] = "List Agent First Name"
 
 df_list = df.values.tolist()
 #list of keywords to filter out into the 'bad' worksheet
-keywords = ["hard cash","oyo", "own your own", "retirement community", "time share", "cash only", "cash offers only", "cash sale", "cash transaction only", "hard money", "55+", "senior community", "no financing", "no loan", "construction loan"]
+keywords = ["hard cash", "ccrc", "own your own", "retirement community", "time share", "timeshare", "cash only", "cash offers only", "cash buyer", 
+            "cash sale", "cash transaction only", "hard money", "hard money only", "55+", "senior community", "no financing", "no loan", "construction loan", 
+            "private money", "leased-land", "leased land", "land lease"]
 keep = []
 bad = []
 
@@ -84,6 +86,6 @@ keep_df.insert(1, "List Agent Last Name", last_name)
 
 bad_df = pd.DataFrame(bad, columns=header)
 
-with pd.ExcelWriter("../Citi processed 9.22.xlsx") as writer:
+with pd.ExcelWriter("../Citi processed 1.29.xlsx") as writer:
   keep_df.to_excel(writer, sheet_name="keep_ca")
   bad_df.to_excel(writer, sheet_name="filt-out_ca")

@@ -1,0 +1,33 @@
+Make the data into a table. Click somewhere in the table. Go to the Data tab and click "From Table/Range".
+The power query window will pop up.
+
+Select all columns except for the address column and then choose "Group By".
+In the "New column name" field, input whatever you want your new column
+to be called. In the Operation dropdown, choose "Sum". In the Column
+dropdown, choose "Address".
+
+The new column will populate with Errors. That is okay. We have to fix a
+couple of things in the formua. In the formula, find where it says
+"List.Sum" (this will be near the end). Replace it with "Text.Combine".
+Then, after the column name in brackets right after Text.Combine, add a
+comma, and then in parentheses, add what you want your delimiter to be
+(the separate between multiple addresses.
+The final product for that section should look like this: 
+Text.Combine([Address], ", ").
+
+Then choose Close & Load.
+
+It's important to note that if anything is different between a realtors
+multiple listings. So a different city or phone number, for example,
+this combining method will not work. Sometimes I run this twice, and
+before the second time, I go through and make sure all the information
+other than the addresses are the same. Amanda said we do not care about
+accuracy in the City. So we can just copy the first city down through a
+realtors other listings. Sort and Highlight Duplicates in Conditional
+Formatting works great for finding these.
+
+This is not perfect, it won't catch all of them, but it will catch most
+of them. You can do the rest manually afterwards
+
+Add an "and" after the last comma:
+=SUBSTITUTE(cell,",",", and",LEN(cell)-LEN(SUBSTITUTE(cell,",","")))
